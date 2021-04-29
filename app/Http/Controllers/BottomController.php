@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TitleController extends Controller
+class BottomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class TitleController extends Controller
      */
     public function index()
     {
-        return view('backend.module',['header'=>'網站標題管理','module'=>'Title']); 
+        //
     }
 
     /**
