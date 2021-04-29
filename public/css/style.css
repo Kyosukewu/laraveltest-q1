@@ -1,0 +1,30 @@
+.container{
+    max-height: 768px;
+    margin: 10px auto;
+    overflow: auto;
+}
+.header{
+    height: 100px;
+}
+.main{
+    height: 568px;
+}
+.option{
+    background: url('/icon/menu.fw.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.option:hover{
+    background: url('/icon/menu2.fw.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.contant{
+    height: 520px;
+}
+.footer{
+    height: 100px;
+}
+.footer-text{
+    line-height: 100px;
+}
