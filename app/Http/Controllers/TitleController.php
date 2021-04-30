@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Title; //載入欲使用的model
 class TitleController extends Controller
 {
     /**
@@ -12,8 +12,10 @@ class TitleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('backend.module',['header'=>'網站標題管理','module'=>'Title']); 
+    {   
+        $all=Title::all();
+        dd($all); //L內建除錯指令 類似var_dump
+        return view('backend.module',['header'=>'網站標題管理','module'=>'Title','rows'=>$all]); 
     }
 
     /**

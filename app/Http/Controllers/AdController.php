@@ -13,7 +13,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.module', ['header' => '動態文字廣告管理', 'module' => 'Ad']);
     }
 
     /**
