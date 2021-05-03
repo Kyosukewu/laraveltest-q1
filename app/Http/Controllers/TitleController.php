@@ -14,7 +14,7 @@ class TitleController extends Controller
     public function index()
     {   
         $all=Title::all();
-        dd($all); //L內建除錯指令 類似var_dump
+        //dd($all); //L內建除錯指令 類似var_dump
         return view('backend.module',['header'=>'網站標題管理','module'=>'Title','rows'=>$all]); 
     }
 

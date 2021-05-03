@@ -15,9 +15,7 @@
     <div class="grid grid-cols-12 text-center text-sm">
         <div class="col-span-5 bg-yellow-300 py-1">網站標題</div>
         <div class="col-span-4 bg-yellow-300 ml-0.5 py-1">替代文字</div>
-        <div class="col-span-1 bg-yellow-300 ml-0.5 py-1">顯示</div>
-        <div class="col-span-1 bg-yellow-300 ml-0.5 py-1">刪除</div>
-        <div class="col-span-1 bg-yellow-300 ml-0.5 py-1">操作</div>
+        <div class="col-span-3 bg-yellow-300 ml-0.5 py-1">功能</div>
     </div>
     <div class="grid grid-cols-12 text-center">
         <div class="col-span-5 py-1"><img src="{{ asset('img/01B01.jpg') }}" alt="" class="w-full"></div>
