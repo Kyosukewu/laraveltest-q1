@@ -17,15 +17,25 @@
         <div class="col-span-4 bg-yellow-300 ml-0.5 py-1">替代文字</div>
         <div class="col-span-3 bg-yellow-300 ml-0.5 py-1">功能</div>
     </div>
+    @isset($rows)
+    @foreach($rows as $row)
     <div class="grid grid-cols-12 text-center">
-        <div class="col-span-5 py-1"><img src="{{ asset('img/01B01.jpg') }}" alt="" class="w-full"></div>
+        <div class="col-span-5 py-1"><img src="{{ asset('img/'.$row->img) }}" alt="" class="w-full"></div>
         <div class="col-span-4 py-1 ml-0.5">
-        <input class="w-full h-full bg-gray-100 hover:bg-yellow-100 focus:outline-none focus:ring focus:ring-yellow-200 focus:rounded-lg" type="text" name="" id="">
+        <div class="w-full h-full bg-gray-100 hover:bg-yellow-100 focus:outline-none focus:ring focus:ring-yellow-200 focus:rounded-lg flex items-center justify-center">{{$row->text}}</div>
         </div>
-        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-green-200 shadow-sm">顯示</button></div>
-        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-red-200 shadow-sm">刪除</button></div>
-        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-indigo-300 shadow-sm">編輯</button></div>
+        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-green-200 shadow-sm" data-id="{{$row->id}}">
+        @if($row->sh==1)
+        顯示
+        @else
+        隱藏
+        @endif
+        </button></div>
+        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-red-200 shadow-sm" data-id="{{$row->id}}">刪除</button></div>
+        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-indigo-300 shadow-sm" data-id="{{$row->id}}">編輯</button></div>
     </div>
+    @endforeach
+    @endisset
     </div>
 </div>
 @endsection
