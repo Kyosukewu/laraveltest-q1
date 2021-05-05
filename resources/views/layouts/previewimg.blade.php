@@ -1,1 +1,1 @@
-<img id="previewimg" src="" style="">
+<img id="previewimg" src="">
