@@ -79,24 +79,37 @@ Route::redirect('/admin', 'admin/title'); //redirect 重新導向至...
 
 //Route::get('admin',[TitleController::class,'index']);//寫死方式,上方先use此controller路徑,執行TitleController中的index方法
 
-Route::prefix('admin')->group(function () {
-    Route::get('/ad', [AdController::class, 'index']);
-    Route::get('/title', [TitleController::class, 'index']);
-    Route::get('/image', [ImageController::class, 'index']);
-    Route::get('/mvim', [MvimController::class, 'index']);
-    Route::get('/total', [TotalController::class, 'index']);
-    Route::get('/bottom', [BottomController::class, 'index']);
-    Route::get('/news', [NewsController::class, 'index']);
-    Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/menu', [MenuController::class, 'index']);
+Route::prefix('admin')->group(function(){
+    //get
+    Route::get('/title',[TitleController::class,'index']);
+    Route::get('/ad',[AdController::class,'index']);
+    Route::get('/image',[ImageController::class,'index']);
+    Route::get('/mvim',[MvimController::class,'index']);
+    Route::get('/total',[TotalController::class,'index']);
+    Route::get('/bottom',[BottomController::class,'index']);
+    Route::get('/news',[NewsController::class,'index']);
+    Route::get('/admin',[AdminController::class,'index']);
+    Route::get('/menu',[MenuController::class,'index']);
+    // Route::get('/submenu/{menu_id}',[SubMenuController::class,'index']);
+                                
+    //post
+    Route::post('/title',[TitleController::class,'store']);
+    Route::post('/ad',[AdController::class,'store']);
+    Route::post('/image',[ImageController::class,'store']);
+    Route::post('/mvim',[MvimController::class,'store']);
+    Route::post('/news',[NewsController::class,'store']);
+    Route::post('/admin',[AdminController::class,'store']);
+    Route::post('/menu',[MenuController::class,'store']);
+    // Route::post('/submenu/{menu_id}',[SubMenuController::class,'store']);
 });
 
+//modals
 
-//modal
-Route::view('/modals/addTitle', 'modals.base_modal', ['modal_header' => '新增網站標題']);
-Route::view('/modals/addAd', 'modals.base_modal', ['modal_header' => '新增動態廣告文字']);
-Route::view('/modals/addImage', 'modals.base_modal', ['modal_header' => '新增校園映像圖片']);
-Route::view('/modals/addMvim', 'modals.base_modal', ['modal_header' => '新增動畫圖片']);
-Route::view('/modals/addNews', 'modals.base_modal', ['modal_header' => '新增最新消息']);
-Route::view('/modals/addAdmin', 'modals.base_modal', ['modal_header' => '新增管理者帳號']);
-Route::view('/modals/addMenu', 'modals.base_modal', ['modal_header' => '新增主選單']);
+Route::get("/modals/addTitle",[TitleController::class,'create']);
+Route::get("/modals/addAd",[AdController::class,'create']);
+Route::get("/modals/addImage",[ImageController::class,'create']);
+Route::get("/modals/addMvim",[MvimController::class,'create']);
+Route::get("/modals/addNews",[NewsController::class,'create']);
+Route::get("/modals/addAdmin",[AdminController::class,'create']);
+Route::get("/modals/addMenu",[MenuController::class,'create']);
+Route::get("/modals/addSubMenu/{menu_id}",[SubMenuController::class,'create']);
