@@ -113,3 +113,6 @@ Route::get("/modals/addNews",[NewsController::class,'create']);
 Route::get("/modals/addAdmin",[AdminController::class,'create']);
 Route::get("/modals/addMenu",[MenuController::class,'create']);
 Route::get("/modals/addSubMenu/{menu_id}",[SubMenuController::class,'create']);
+
+//edit
+Route::get("/modals/title/{id}",[TitleController::class,'edit']);

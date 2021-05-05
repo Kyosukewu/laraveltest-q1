@@ -19,7 +19,7 @@
 <body>
     <div class="container max-w-5xl mx-auto overflow-auto">
         <div class="header w-full max-h-24">
-            <img class="w-full h-full" src="{{ asset('img/01B01.jpg') }}" alt="" class="w-full">
+            <img class="w-full h-full" src="{{ asset('storage/01B01.jpg') }}" alt="" class="w-full">
         </div>
         <div class="main w-full grid grid-cols-12">
             @yield("main")

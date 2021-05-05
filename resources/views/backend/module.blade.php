@@ -20,9 +20,9 @@
     @isset($rows)
     @foreach($rows as $row)
     <div class="grid grid-cols-12 text-center">
-        <div class="col-span-5 py-1"><img src="{{ asset('img/'.$row->img) }}" alt="" class="w-full"></div>
+        <div class="col-span-5 py-1"><img src="{{ asset('storage/'.$row->img) }}" alt="" class="w-full"></div>
         <div class="col-span-4 py-1 ml-0.5">
-        <div class="w-full h-full bg-gray-100 hover:bg-yellow-100 focus:outline-none focus:ring focus:ring-yellow-200 focus:rounded-lg flex items-center justify-center">{{$row->text}}</div>
+        <div class="w-full h-full bg-gray-100 flex items-center justify-center">{{$row->text}}</div>
         </div>
         <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-green-200 shadow-sm" data-id="{{$row->id}}">
         @if($row->sh==1)
@@ -32,7 +32,7 @@
         @endif
         </button></div>
         <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-red-200 shadow-sm" data-id="{{$row->id}}">刪除</button></div>
-        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-indigo-300 shadow-sm" data-id="{{$row->id}}">編輯</button></div>
+        <div class="col-span-1 py-1 ml-0.5"><button class="edit bg-gray-100 w-full h-full rounded-md hover:bg-indigo-300 shadow-sm" data-id="{{$row->id}}">編輯</button></div>
     </div>
     @endforeach
     @endisset
@@ -47,6 +47,13 @@ $('#addRow').on('click',function(){
         $("#modal").html(modal)
         $("#baseModal").show()
         //尚缺清除暫存
+    })
+})
+$('.edit').on('click',function(){
+    let id=$(this).data('id')
+    $.get(`/modals/title/${id}`,function(modal){
+        $("#modal").html(modal)
+        $("#baseModal").show()
     })
 })
 </script>

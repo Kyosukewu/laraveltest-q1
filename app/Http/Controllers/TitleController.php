@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; //封包外部傳來的資料
 use App\Models\Title; //載入欲使用的model
 class TitleController extends Controller
 {
@@ -57,15 +57,16 @@ class TitleController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('img') && $request->file('img')->isValid()){
+            //hasFile->若有檔案 isValid->驗證檔案
             $title=new Title;
-            $request->file('img')->storeAs('public',$request->file('img')->getClientOriginalName());
-
+            $request->file('img')->storeAs('public',$request->file('img')->getClientOriginalName());//取得上傳的原始檔名
+            //storeAs（目錄,檔名）
             $title->img=$request->file('img')->getClientOriginalName();
             $title->text=$request->input('text');
             $title->save();
         }
 
-        return redirect('/admin/title');
+        return redirect('/admin/title'); //同header
     }
 
     /**
@@ -87,7 +88,33 @@ class TitleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title=Title::find($id);
+        $view=[
+            'action'=>'/admin/title/'.$id,
+            'modal_header'=>"編輯網站標題資料",
+            'modal_body'=>[
+                [
+                    'label'=>'',
+                    'tag'=>'img',
+                    'src'=>$title->img,
+                    'style'=>'width:300px;height:30px;'
+                ],
+                [
+                    'label'=>'標題區圖片',
+                    'tag'=>'input',
+                    'type'=>'file',
+                    'name'=>'img'
+                ],
+                [
+                    'label'=>'標題區替代文字',
+                    'tag'=>'input',
+                    'type'=>'text',
+                    'name'=>'text',
+                    'value'=>$title->text
+                ],
+            ],
+        ];
+        return view('modals.base_modal',$view);
     }
 
     /**
