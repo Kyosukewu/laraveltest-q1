@@ -24,7 +24,7 @@
         <div class="col-span-4 py-1 ml-0.5">
         <div class="w-full h-full bg-gray-100 flex items-center justify-center">{{$row->text}}</div>
         </div>
-        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-green-200 shadow-sm" data-id="{{$row->id}}">
+        <div class="col-span-1 py-1 ml-0.5"><button class="show @if($row->sh==1) bg-green-100 @else bg-gray-100 @endif w-full h-full rounded-md hover:bg-green-200 shadow-sm" data-id="{{$row->id}}">
         @if($row->sh==1)
         顯示
         @else
@@ -66,6 +66,17 @@ $('.delete').on('click',function(){
     $.ajax({
         type:'delete',
         url:`/admin/title/${id}`,
+        success:function(){
+            location.reload()
+        }
+    })
+})
+$('.show').on('click',function(){
+    let id=$(this).data('id')
+    
+    $.ajax({
+        type:'patch',
+        url:`/admin/title/sh/${id}`,
         success:function(){
             location.reload()
         }

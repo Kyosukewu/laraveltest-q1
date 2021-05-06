@@ -111,6 +111,9 @@ Route::prefix('admin')->group(function(){
 
     //delete
     Route::delete("/title/{id}",[TitleController::class,'destroy']);
+    
+    //show
+    Route::patch("/title/sh/{id}",[TitleController::class,'display']);
 });
 
 //modals

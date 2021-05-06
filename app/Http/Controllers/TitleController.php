@@ -145,7 +145,7 @@ class TitleController extends Controller
         $title->save();
         return redirect('/admin/title');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -155,5 +155,26 @@ class TitleController extends Controller
     public function destroy($id)
     {
         Title::destroy($id);
+        //關於軟刪除可參考官方文件Eloquent ORM->getting started->Soft Deleting
+    }
+
+    /**
+     * 改變資料顯示狀態
+     */
+    public function display($id)
+    {
+        $title=Title::find($id);
+        if($title->sh==1){
+            $title->sh=0;
+            $findDefault=Title::where('sh',0)->first();//找出其他不顯示的第一筆資料
+            $findDefault->sh=1;
+            $findDefault->save();
+        }else{
+            $title->sh=1;
+            $findshow=Title::where('sh',1)->first();
+            $findshow->sh=0;
+            $findshow->save();
+        }
+        $title->save();
     }
 }
