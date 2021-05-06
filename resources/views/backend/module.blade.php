@@ -31,7 +31,7 @@
         隱藏
         @endif
         </button></div>
-        <div class="col-span-1 py-1 ml-0.5"><button class="bg-gray-100 w-full h-full rounded-md hover:bg-red-200 shadow-sm" data-id="{{$row->id}}">刪除</button></div>
+        <div class="col-span-1 py-1 ml-0.5"><button class="delete bg-gray-100 w-full h-full rounded-md hover:bg-red-200 shadow-sm" data-id="{{$row->id}}">刪除</button></div>
         <div class="col-span-1 py-1 ml-0.5"><button class="edit bg-gray-100 w-full h-full rounded-md hover:bg-indigo-300 shadow-sm" data-id="{{$row->id}}">編輯</button></div>
     </div>
     @endforeach
@@ -42,6 +42,11 @@
 
 @section("script")
 <script>
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 $('#addRow').on('click',function(){
     $.get("/modals/add{{ $module }}",function(modal){
         $("#modal").html(modal)
@@ -54,6 +59,16 @@ $('.edit').on('click',function(){
     $.get(`/modals/title/${id}`,function(modal){
         $("#modal").html(modal)
         $("#baseModal").show()
+    })
+})
+$('.delete').on('click',function(){
+    let id=$(this).data('id')
+    $.ajax({
+        type:'delete',
+        url:`/admin/title/${id}`,
+        success:function(){
+            location.reload()
+        }
     })
 })
 </script>

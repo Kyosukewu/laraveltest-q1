@@ -79,6 +79,10 @@ Route::redirect('/admin', 'admin/title'); //redirect 重新導向至...
 
 //Route::get('admin',[TitleController::class,'index']);//寫死方式,上方先use此controller路徑,執行TitleController中的index方法
 
+//get->讀取
+//post->新增
+//patch->更新
+
 Route::prefix('admin')->group(function(){
     //get
     Route::get('/title',[TitleController::class,'index']);
@@ -101,6 +105,12 @@ Route::prefix('admin')->group(function(){
     Route::post('/admin',[AdminController::class,'store']);
     Route::post('/menu',[MenuController::class,'store']);
     // Route::post('/submenu/{menu_id}',[SubMenuController::class,'store']);
+
+    //update
+    Route::patch("/title/{id}",[TitleController::class,'update']);
+
+    //delete
+    Route::delete("/title/{id}",[TitleController::class,'destroy']);
 });
 
 //modals

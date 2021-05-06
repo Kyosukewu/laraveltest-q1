@@ -7,6 +7,9 @@
       </div>
       <div class="modal-body row-span-4 text-center">
         @csrf
+        @isset($method)
+          @method($method)
+        @endisset
         <table class="m-auto w-5/6">
           @isset($modal_body)
           @foreach($modal_body as $row)

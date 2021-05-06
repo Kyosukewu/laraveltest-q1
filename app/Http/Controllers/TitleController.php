@@ -88,9 +88,11 @@ class TitleController extends Controller
      */
     public function edit($id)
     {
+
         $title=Title::find($id);
         $view=[
             'action'=>'/admin/title/'.$id,
+            'method'=>'PATCH',
             'modal_header'=>"編輯網站標題資料",
             'modal_body'=>[
                 [
@@ -126,7 +128,22 @@ class TitleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $title=Title::find($id);//明確只撈一筆資料可用此方式
+        //$title=Title::where('id',$id)->get(); //撈一個二維陣列的結果(fetchall)
+
+        if($request->hasFile('img') && $request->file('img')->isValid()){
+            //hasFile->若有檔案 isValid->驗證檔案
+            $request->file('img')->storeAs('public',$request->file('img')->getClientOriginalName());//取得上傳的原始檔名
+            //storeAs（目錄,檔名）
+            $title->img=$request->file('img')->getClientOriginalName();
+        }
+
+        if($title->text!=$request->input('text')){
+            $title->text=$request->input('text');
+        }
+
+        $title->save();
+        return redirect('/admin/title');
     }
 
     /**
@@ -137,6 +154,6 @@ class TitleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Title::destroy($id);
     }
 }
