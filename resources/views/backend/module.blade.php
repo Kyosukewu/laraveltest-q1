@@ -13,26 +13,31 @@
     <div class="contant border w-full">
         <div class="text-sm text-center border-b bg-yellow-400 p-3">{{$header}}</div>
         <div class="grid grid-cols-12 text-center text-sm">
-            <div class="col-span-5 bg-yellow-300 py-1">網站標題</div>
-            <div class="col-span-4 bg-yellow-300 ml-0.5 py-1">替代文字</div>
-            <div class="col-span-3 bg-yellow-300 ml-0.5 py-1">功能</div>
+            @isset($cols)
+            @foreach($cols as $col)
+            <div class="col-span-{{$col['grid']}} bg-yellow-300 py-1">{{$col['title']}}</div>
+            @endforeach
+            @endisset
         </div>
         @isset($rows)
         @foreach($rows as $row)
         <div class="grid grid-cols-12 text-center">
-            <div class="col-span-5 py-1"><img src="{{ asset('storage/'.$row->img) }}" alt="" class="w-full"></div>
-            <div class="col-span-4 py-1 ml-0.5">
-                <div class="w-full h-full bg-gray-100 flex items-center justify-center">{{$row->text}}</div>
-            </div>
-            <div class="col-span-1 py-1 ml-0.5"><button class="show {{($row->sh==1)?'bg-green-100':'bg-gray-100' }} w-full h-full rounded-md hover:bg-green-200 shadow-sm" data-id="{{$row->id}}">
-                    @if($row->sh==1)
-                    顯示
-                    @else
-                    隱藏
-                    @endif
-                </button></div>
-            <div class="col-span-1 py-1 ml-0.5"><button class="delete bg-gray-100 w-full h-full rounded-md hover:bg-red-200 shadow-sm" data-id="{{$row->id}}">刪除</button></div>
-            <div class="col-span-1 py-1 ml-0.5"><button class="edit bg-gray-100 w-full h-full rounded-md hover:bg-indigo-300 shadow-sm" data-id="{{$row->id}}">編輯</button></div>
+            @foreach($row as $item)
+
+                @switch($item['tag'])
+                @case('img')
+                @include('layouts.img',$item)
+                @break
+                @case('button')
+                @include('layouts.button',$item)
+                @break
+                @default
+                <div class="col-span-4 py-1">
+                <div class="w-full h-full bg-gray-100 flex items-center justify-center">{!! nl2br($item['text']) !!}</div>
+                </div>
+                @endswitch
+            
+            @endforeach
         </div>
         @endforeach
         @endisset
@@ -65,13 +70,13 @@
         let id = $(this).data('id')
         Swal.fire({
             title: '確定要刪除嗎？',
-            icon:'question',
-            iconColor:'#ff3333',
+            icon: 'question',
+            iconColor: '#ff3333',
             showDenyButton: true,
             confirmButtonText: `刪除！`,
-            confirmButtonColor:'red',
+            confirmButtonColor: 'red',
             denyButtonText: `取消`,
-            denyButtonColor:'gray'
+            denyButtonColor: 'gray'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({

@@ -1,1 +1,1 @@
-<img src="{{ asset('storage/'.$src) }}" @isset($style) style="{{ $style }}" @endisset>
+<div class="col-span-5 py-1"><img class="{{ $class }}" src="{{ asset('storage/'.$src) }}"></div>

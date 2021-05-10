@@ -12,10 +12,74 @@ class TitleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $all=Title::all();
+    {
+        $all = Title::all();
         //dd($all); //L內建除錯指令 類似var_dump
-        return view('backend.module',['header'=>'網站標題管理','module'=>'Title','rows'=>$all]); 
+        $cols = [
+            [
+                'title'=>'網站標題',
+                'grid'=>'5',
+            ],
+            [
+                'title'=>'替代文字',
+                'grid'=>'4',
+            ],
+            [
+                'title'=>'功能',
+                'grid'=>'3',
+            ]
+        ];
+        $rows = [];
+        foreach ($all as $a) {
+            $tmp = [
+                [
+                    'tag' => 'img',
+                    'src' => $a->img,
+                    'class'=>'w-full'
+                ],
+                [
+                    'tag' => '',
+                    'text' => $a->text,
+                ],
+                [
+                    'tag' => 'button',
+                    'action' => 'show',
+                    'color' => ($a->sh == 1) ? 'bg-green-100' : 'bg-gray-100',
+                    'hover' => 'bg-green-200',
+                    'type' => 'button',
+                    'id' => $a->id,
+                    'text' => ($a->sh == 1) ? '顯示' : '隱藏',
+                ],
+                [
+                    'tag' => 'button',
+                    'type' => 'button',
+                    'action' => 'delete',
+                    'id' => $a->id,
+                    'color' => 'bg-gray-100',
+                    'hover' => 'bg-red-200',
+                    'text' => '刪除'
+                ],
+                [
+                    'tag' => 'button',
+                    'type' => 'button',
+                    'action' => 'edit',
+                    'id' => $a->id,
+                    'color' => 'bg-gray-100',
+                    'hover' => 'bg-indigo-300',
+                    'text' => '編輯'
+                ]
+            ];
+            $rows[] = $tmp;
+        }
+        // dd($cols);
+        $view = [
+            'header' => '網站標題管理',
+            'module' => 'Title',
+            'cols' => $cols,
+            'rows' => $rows,
+        ];
+        // dd($view);
+        return view('backend.module', $view);
     }
 
     /**
@@ -25,27 +89,27 @@ class TitleController extends Controller
      */
     public function create()
     {
-        $view=[
-            'action'=>'/admin/title',
-            'modal_header'=>"新增網站標題",
-            'modal_body'=>[
+        $view = [
+            'action' => '/admin/title',
+            'modal_header' => "新增網站標題",
+            'modal_body' => [
                 [
-                    'label'=>'標題區圖片',
-                    'tag'=>'input',
-                    'type'=>'file',
-                    'name'=>'img'
+                    'label' => '標題區圖片',
+                    'tag' => 'input',
+                    'type' => 'file',
+                    'name' => 'img'
                 ],
                 [
-                    'label'=>'標題區替代文字',
-                    'tag'=>'input',
-                    'type'=>'text',
-                    'name'=>'text'
+                    'label' => '標題區替代文字',
+                    'tag' => 'input',
+                    'type' => 'text',
+                    'name' => 'text'
                 ],
             ],
         ];
 
 
-        return view("modals.base_modal",$view);
+        return view("modals.base_modal", $view);
     }
 
     /**
@@ -56,13 +120,13 @@ class TitleController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('img') && $request->file('img')->isValid()){
+        if ($request->hasFile('img') && $request->file('img')->isValid()) {
             //hasFile->若有檔案 isValid->驗證檔案
-            $title=new Title;
-            $request->file('img')->storeAs('public',$request->file('img')->getClientOriginalName());//取得上傳的原始檔名
+            $title = new Title;
+            $request->file('img')->storeAs('public', $request->file('img')->getClientOriginalName()); //取得上傳的原始檔名
             //storeAs（目錄,檔名）
-            $title->img=$request->file('img')->getClientOriginalName();
-            $title->text=$request->input('text');
+            $title->img = $request->file('img')->getClientOriginalName();
+            $title->text = $request->input('text');
             $title->save();
         }
 
@@ -89,34 +153,34 @@ class TitleController extends Controller
     public function edit($id)
     {
 
-        $title=Title::find($id);
-        $view=[
-            'action'=>'/admin/title/'.$id,
-            'method'=>'PATCH',
-            'modal_header'=>"編輯網站標題資料",
-            'modal_body'=>[
+        $title = Title::find($id);
+        $view = [
+            'action' => '/admin/title/' . $id,
+            'method' => 'PATCH',
+            'modal_header' => "編輯網站標題資料",
+            'modal_body' => [
                 [
-                    'label'=>'',
-                    'tag'=>'img',
-                    'src'=>$title->img,
-                    'style'=>'width:300px;height:30px;'
+                    'label' => '',
+                    'tag' => 'img',
+                    'src' => $title->img,
+                    'style' => 'width:300px;height:30px;'
                 ],
                 [
-                    'label'=>'標題區圖片',
-                    'tag'=>'input',
-                    'type'=>'file',
-                    'name'=>'img'
+                    'label' => '標題區圖片',
+                    'tag' => 'input',
+                    'type' => 'file',
+                    'name' => 'img'
                 ],
                 [
-                    'label'=>'標題區替代文字',
-                    'tag'=>'input',
-                    'type'=>'text',
-                    'name'=>'text',
-                    'value'=>$title->text
+                    'label' => '標題區替代文字',
+                    'tag' => 'input',
+                    'type' => 'text',
+                    'name' => 'text',
+                    'value' => $title->text
                 ],
             ],
         ];
-        return view('modals.base_modal',$view);
+        return view('modals.base_modal', $view);
     }
 
     /**
@@ -128,24 +192,24 @@ class TitleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $title=Title::find($id);//明確只撈一筆資料可用此方式
+        $title = Title::find($id); //明確只撈一筆資料可用此方式
         //$title=Title::where('id',$id)->get(); //撈一個二維陣列的結果(fetchall)
 
-        if($request->hasFile('img') && $request->file('img')->isValid()){
+        if ($request->hasFile('img') && $request->file('img')->isValid()) {
             //hasFile->若有檔案 isValid->驗證檔案
-            $request->file('img')->storeAs('public',$request->file('img')->getClientOriginalName());//取得上傳的原始檔名
+            $request->file('img')->storeAs('public', $request->file('img')->getClientOriginalName()); //取得上傳的原始檔名
             //storeAs（目錄,檔名）
-            $title->img=$request->file('img')->getClientOriginalName();
+            $title->img = $request->file('img')->getClientOriginalName();
         }
 
-        if($title->text!=$request->input('text')){
-            $title->text=$request->input('text');
+        if ($title->text != $request->input('text')) {
+            $title->text = $request->input('text');
         }
 
         $title->save();
         return redirect('/admin/title');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -163,16 +227,16 @@ class TitleController extends Controller
      */
     public function display($id)
     {
-        $title=Title::find($id);
-        if($title->sh==1){
-            $title->sh=0;
-            $findDefault=Title::where('sh',0)->first();//找出其他不顯示的第一筆資料
-            $findDefault->sh=1;
+        $title = Title::find($id);
+        if ($title->sh == 1) {
+            $title->sh = 0;
+            $findDefault = Title::where('sh', 0)->first(); //找出其他不顯示的第一筆資料
+            $findDefault->sh = 1;
             $findDefault->save();
-        }else{
-            $title->sh=1;
-            $findshow=Title::where('sh',1)->first();
-            $findshow->sh=0;
+        } else {
+            $title->sh = 1;
+            $findshow = Title::where('sh', 1)->first();
+            $findshow->sh = 0;
             $findshow->save();
         }
         $title->save();
