@@ -23,7 +23,6 @@
         @foreach($rows as $row)
         <div class="grid grid-cols-12 text-center">
             @foreach($row as $item)
-
                 @switch($item['tag'])
                 @case('img')
                 @include('layouts.img',$item)
@@ -32,11 +31,8 @@
                 @include('layouts.button',$item)
                 @break
                 @default
-                <div class="col-span-4 py-1">
-                <div class="w-full h-full bg-gray-100 flex items-center justify-center">{!! nl2br($item['text']) !!}</div>
-                </div>
+                @include('layouts.text',$item)
                 @endswitch
-            
             @endforeach
         </div>
         @endforeach
@@ -61,7 +57,7 @@
     })
     $('.edit').on('click', function() {
         let id = $(this).data('id')
-        $.get(`/modals/title/${id}`, function(modal) {
+        $.get(`/modals/{{ strtolower($module) }}/${id}`, function(modal) {
             $("#modal").html(modal)
             $("#baseModal").show()
         })
@@ -81,7 +77,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'delete',
-                    url: `/admin/title/${id}`,
+                    url: `/admin/{{ strtolower($module) }}/${id}`,
                     success: function() {
                         Swal.fire('已成功刪除', '', 'success')
                         location.reload()
@@ -95,7 +91,7 @@
 
         $.ajax({
             type: 'patch',
-            url: `/admin/title/sh/${id}`,
+            url: `/admin/{{ strtolower($module) }}/sh/${id}`,
             success: function() {
                 location.reload()
             }

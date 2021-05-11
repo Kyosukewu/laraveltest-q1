@@ -40,6 +40,7 @@ class TitleController extends Controller
                 [
                     'tag' => '',
                     'text' => $a->text,
+                    'grid'=>'4'
                 ],
                 [
                     'tag' => 'button',

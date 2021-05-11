@@ -108,12 +108,15 @@ Route::prefix('admin')->group(function(){
 
     //update
     Route::patch("/title/{id}",[TitleController::class,'update']);
+    Route::patch("/ad/{id}",[AdController::class,'update']);
 
     //delete
     Route::delete("/title/{id}",[TitleController::class,'destroy']);
+    Route::delete("/ad/{id}",[AdController::class,'destroy']);
     
     //show
     Route::patch("/title/sh/{id}",[TitleController::class,'display']);
+    Route::patch("/ad/sh/{id}",[AdController::class,'display']);
 });
 
 //modals
@@ -129,3 +132,4 @@ Route::get("/modals/addSubMenu/{menu_id}",[SubMenuController::class,'create']);
 
 //edit
 Route::get("/modals/title/{id}",[TitleController::class,'edit']);
+Route::get("/modals/ad/{id}",[AdController::class,'edit']);
