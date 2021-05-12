@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Bottom;
 
 class BottomController extends Controller
 {
@@ -13,7 +14,36 @@ class BottomController extends Controller
      */
     public function index()
     {
-        return view('backend.module', ['header' => '頁尾版權管理', 'module' => 'Bottom']);
+        $all = Bottom::first();
+        //dd($all); //L內建除錯指令 類似var_dump
+        $cols = [
+                'title' => '頁尾版權資料',
+                'grid' => '5',
+        ];
+        $rows = [
+            [
+                'text' => $all->bottom,
+                'grid' => '5'
+            ],
+            [
+                'tag' => 'button',
+                'type' => 'button',
+                'action' => 'edit',
+                'id' => $all->id,
+                'color' => 'bg-gray-100',
+                'hover' => 'bg-indigo-300',
+                'text' => '編輯'
+            ]
+        ];
+        // dd($rows);
+        $view = [
+            'header' => '頁尾版權管理',
+            'module' => 'Bottom',
+            'cols' => $cols,
+            'rows' => $rows,
+        ];
+        // dd($view);
+        return view('backend.module', $view);
     }
 
     /**
@@ -56,7 +86,22 @@ class BottomController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bottom = Bottom::find($id);
+        $view = [
+            'action' => '/admin/bottom/' . $id,
+            'method' => 'PATCH',
+            'modal_header' => "編輯頁尾版權文字",
+            'modal_body' => [
+                [
+                    'label' => '頁尾版權文字',
+                    'tag' => 'input',
+                    'type' => 'text',
+                    'name' => 'bottom',
+                    'value' => $bottom->bottom
+                ],
+            ],
+        ];
+        return view('modals.base_modal', $view);
     }
 
     /**
@@ -68,7 +113,14 @@ class BottomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bottom = Bottom::find($id);
+
+        if ($bottom->bottom != $request->input('bottom')) {
+            $bottom->bottom = $request->input('bottom');
+        }
+
+        $bottom->save();
+        return redirect('/admin/bottom');
     }
 
     /**

@@ -98,7 +98,7 @@ class TitleController extends Controller
                     'label' => '標題區圖片',
                     'tag' => 'input',
                     'type' => 'file',
-                    'name' => 'img'
+                    'name' => 'img',
                 ],
                 [
                     'label' => '標題區替代文字',
@@ -164,7 +164,7 @@ class TitleController extends Controller
                     'label' => '',
                     'tag' => 'img',
                     'src' => $title->img,
-                    'style' => 'width:300px;height:30px;'
+                    'class'=>'w-full'
                 ],
                 [
                     'label' => '標題區圖片',

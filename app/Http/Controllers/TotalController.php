@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Total;
 
 class TotalController extends Controller
 {
@@ -13,7 +14,36 @@ class TotalController extends Controller
      */
     public function index()
     {
-        return view('backend.module', ['header' => '進站人數管理', 'module' => 'Total']);
+        $all = Total::first();
+        //dd($all); //L內建除錯指令 類似var_dump
+        $cols = [
+                'title' => '進站總人數',
+                'grid' => '5',
+        ];
+        $rows = [
+            [
+                'text' => $all->total,
+                'grid' => '5'
+            ],
+            [
+                'tag' => 'button',
+                'type' => 'button',
+                'action' => 'edit',
+                'id' => $all->id,
+                'color' => 'bg-gray-100',
+                'hover' => 'bg-indigo-300',
+                'text' => '編輯'
+            ]
+        ];
+        // dd($rows);
+        $view = [
+            'header' => '進站總人數管理',
+            'module' => 'Total',
+            'cols' => $cols,
+            'rows' => $rows,
+        ];
+        // dd($view);
+        return view('backend.module', $view);
     }
 
     /**
@@ -56,7 +86,22 @@ class TotalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $total = Total::find($id);
+        $view = [
+            'action' => '/admin/total/' . $id,
+            'method' => 'PATCH',
+            'modal_header' => "編輯進站總人數資料",
+            'modal_body' => [
+                [
+                    'label' => '進站總人數',
+                    'tag' => 'input',
+                    'type' => 'number',
+                    'name' => 'total',
+                    'value' => $total->total
+                ],
+            ],
+        ];
+        return view('modals.base_modal', $view);
     }
 
     /**
@@ -68,7 +113,14 @@ class TotalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $total = Total::find($id);
+
+        if ($total->total != $request->input('total')) {
+            $total->total = $request->input('total');
+        }
+
+        $total->save();
+        return redirect('/admin/total');
     }
 
     /**
