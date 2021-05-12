@@ -31,7 +31,7 @@ class NewsController extends Controller
             $tmp = [
                 [
                     'tag' => '',
-                    'text' => $a->text,
+                    'text' => mb_substr($a->text,0,50,'utf8'),
                     'grid' => '9'
                 ],
                 [
@@ -88,9 +88,9 @@ class NewsController extends Controller
             'modal_body' => [
                 [
                     'label' => '最新消息內容',
-                    'tag' => 'input',
-                    'type' => 'text',
-                    'name' => 'text'
+                    'tag' => 'textarea',
+                    'name' => 'text',
+                    'class'=>'w-full'
                 ],
             ],
         ];
@@ -141,10 +141,10 @@ class NewsController extends Controller
             'modal_body' => [
                 [
                     'label' => '最新消息內容',
-                    'tag' => 'input',
-                    'type' => 'text',
+                    'tag' => 'textarea',
                     'name' => 'text',
-                    'value' => $news->text
+                    'value' => $news->text,
+                    'class'=>'w-full'
                 ],
             ],
         ];

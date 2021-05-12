@@ -36,6 +36,9 @@
                 @case('button')
                 @include('layouts.button',$item)
                 @break
+                @case('textarea')
+                @include('layouts.textarea',$item)
+                @break
                 @default
                 @include('layouts.text',$item)
                 @endswitch
