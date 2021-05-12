@@ -14,8 +14,7 @@
           @isset($modal_body)
           @foreach($modal_body as $row)
           <tr>
-            <td></td>
-            <td class="text-center">
+            <td colspan="2" class="text-center m-auto">
               @if(isset($row['type']) && $row['type']=='file')
               @include("layouts.previewimg")
               @endif
@@ -62,6 +61,7 @@
     const file = this.files[0]; //取得上傳的檔案
     const objectURL = URL.createObjectURL(file); //取得圖檔路徑
     $('#previewimg').attr('src', objectURL);
-    $('#previewimg').attr('style', 'width:300px; height:30px;');
+    $('#previewimg').addClass('w-1/3 m-auto');
+    // $('#previewimg').attr('style', 'width:300px; height:30px;');
   });
 </script>

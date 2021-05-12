@@ -3,8 +3,8 @@
     <div class="menu_sub text-center text-sm">
         <div class="option p-3"><a href="/admin/title" class="block">標題圖片管理</a></div>
         <div class="option p-3"><a href="/admin/ad" class="block">動態文字廣告管理</a></div>
-        <div class="option p-3"><a href="/admin/image" class="block">動畫圖片管理</a></div>
-        <div class="option p-3"><a href="/admin/mvim" class="block">校園映像資料管理</a></div>
+        <div class="option p-3"><a href="/admin/image" class="block">校園映像資料管理</a></div>
+        <div class="option p-3"><a href="/admin/mvim" class="block">動畫圖片管理</a></div>
         <div class="option p-3"><a href="/admin/total" class="block">進站總人數管理</a></div>
         <div class="option p-3"><a href="/admin/bottom" class="block">頁尾版權資料管理</a></div>
         <div class="option p-3"><a href="/admin/news" class="block">最新消息資料管理</a></div>

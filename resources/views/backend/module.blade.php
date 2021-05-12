@@ -12,7 +12,7 @@
         </div>
         <button class="col-span-4 bg-gray-100 hover:bg-gray-200 p-3 rounded-md">管理登出</button>
     </div>
-    <div class="contant border w-full">
+    <div class="contant border w-full h-full">
         <div class="text-sm text-center border-b bg-yellow-400 p-3">{{$header}}</div>
         <div class="grid grid-cols-12 text-center text-sm">
             @isset($cols)
@@ -23,6 +23,7 @@
             @endif
             @endisset
         </div>
+        <div class="w-full h-5/6 overflow-auto">
         @isset($rows)
         @if($module != 'Total' && $module != 'Bottom')
         @foreach($rows as $row)
@@ -44,13 +45,14 @@
         @else
             <div class="grid grid-cols-12">
                 <div class="col-span-{{ $cols['grid'] }} bg-yellow-200 flex justify-center items-center">{{ $cols['title'] }}</div>
-                <div class="col-span-{{ $rows[0]['grid'] }} flex justify-center items-center">{{ $rows[0]['text'] }}</div>
+                <div class="col-span-{{ $rows[0]['grid'] }} bg-gray-100 flex justify-center items-center">{{ $rows[0]['text'] }}</div>
                 <div class="col-span-2">
                 @include('layouts.button',$rows[1])
                 </div>
             </div>
         @endif
         @endisset
+        </div>
     </div>
 </div>
 @endsection

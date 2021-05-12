@@ -35,7 +35,8 @@ class TitleController extends Controller
                 [
                     'tag' => 'img',
                     'src' => $a->img,
-                    'class'=>'w-full'
+                    'class'=>'w-full',
+                    'grid'=>'5'
                 ],
                 [
                     'tag' => '',

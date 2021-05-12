@@ -1,1 +1,1 @@
-<div class="col-span-5 py-1"><img class="{{ $class }}" src="{{ asset('storage/'.$src) }}"></div>
+<div class="col-span-{{ $grid }} py-1 flex items-center"><img class="{{ $class }}" src="{{ asset('storage/'.$src) }}"></div>
