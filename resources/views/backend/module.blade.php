@@ -5,9 +5,9 @@
 <div class="main_contant col-span-9 border">
     <div class="grid grid-cols-12">
         <div class="col-span-8 text-center p-3 relative">
-        @if($module != 'Total' && $module != 'Bottom')
+            @if($module != 'Total' && $module != 'Bottom')
             <button class=" absolute align-middle left-2 bg-blue-100 hover:bg-blue-200 w-14 h-7 rounded-md" id="addRow">新增</button>
-        @endif
+            @endif
             <p>後台管理區</p>
         </div>
         <button class="col-span-4 bg-gray-100 hover:bg-gray-200 p-3 rounded-md">管理登出</button>
@@ -24,11 +24,11 @@
             @endisset
         </div>
         <div class="w-full h-5/6 overflow-auto">
-        @isset($rows)
-        @if($module != 'Total' && $module != 'Bottom')
-        @foreach($rows as $row)
-        <div class="grid grid-cols-12 text-center">
-            @foreach($row as $item)
+            @isset($rows)
+            @if($module != 'Total' && $module != 'Bottom')
+            @foreach($rows as $row)
+            <div class="grid grid-cols-12 text-center">
+                @foreach($row as $item)
                 @switch($item['tag'])
                 @case('img')
                 @include('layouts.img',$item)
@@ -39,19 +39,19 @@
                 @default
                 @include('layouts.text',$item)
                 @endswitch
+                @endforeach
+            </div>
             @endforeach
-        </div>
-        @endforeach
-        @else
+            @else
             <div class="grid grid-cols-12">
                 <div class="col-span-{{ $cols['grid'] }} bg-yellow-200 flex justify-center items-center">{{ $cols['title'] }}</div>
                 <div class="col-span-{{ $rows[0]['grid'] }} bg-gray-100 flex justify-center items-center">{{ $rows[0]['text'] }}</div>
                 <div class="col-span-2">
-                @include('layouts.button',$rows[1])
+                    @include('layouts.button',$rows[1])
                 </div>
             </div>
-        @endif
-        @endisset
+            @endif
+            @endisset
         </div>
     </div>
 </div>
@@ -80,6 +80,7 @@
     })
     $('.delete').on('click', function() {
         let id = $(this).data('id')
+        let admin = $(this).data('admin')
         Swal.fire({
             title: '確定要刪除嗎？',
             icon: 'question',
@@ -91,14 +92,22 @@
             denyButtonColor: 'gray'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.ajax({
-                    type: 'delete',
-                    url: `/admin/{{ strtolower($module) }}/${id}`,
-                    success: function() {
-                        Swal.fire('已成功刪除', '', 'success')
-                        location.reload()
-                    }
-                })
+                if (admin != 'admin') {
+                    $.ajax({
+                        type: 'delete',
+                        url: `/admin/{{ strtolower($module) }}/${id}`,
+                        success: function() {
+                            Swal.fire('已成功刪除', '', 'success')
+                            location.reload()
+                        }
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Oops...',
+                        text: '最高權限帳號無法刪除',
+                    })
+                }
             }
         })
     })

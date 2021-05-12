@@ -150,7 +150,8 @@ class ImageController extends Controller
                     'label' => '',
                     'tag' => 'img',
                     'src' => $title->img,
-                    'class'=>'w-1/3'
+                    'class'=>'w-1/3 m-auto',
+                    'grid'=>'9'
                 ],
                 [
                     'label' => '校園映像圖片',

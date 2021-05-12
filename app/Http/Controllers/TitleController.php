@@ -165,7 +165,8 @@ class TitleController extends Controller
                     'label' => '',
                     'tag' => 'img',
                     'src' => $title->img,
-                    'class'=>'w-full'
+                    'class'=>'w-full',
+                    'grid'=>''
                 ],
                 [
                     'label' => '標題區圖片',
