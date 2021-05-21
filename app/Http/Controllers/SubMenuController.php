@@ -3,35 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Menu;
+use App\Models\Sub_menu;
 
-class MenuController extends Controller
+class SubMenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($menu_id)
     {
-        $all = Menu::all();
+        $all = Sub_menu::where("menu_id",$menu_id)->get();  //get()等同 fetchAll
         //dd($all); //L內建除錯指令 類似var_dump
         $cols = [
             [
-                'title' => '主選單',
-                'grid' => '3',
+                'title' => '次選單名稱',
+                'grid' => '5',
             ],
             [
-                'title' => '選單連結',
-                'grid' => '4',
-            ],
-            [
-                'title' => '次選單',
-                'grid' => '1',
+                'title' => '次選單連結',
+                'grid' => '5',
             ],
             [
                 'title' => '功能',
-                'grid' => '4',
+                'grid' => '2',
             ]
         ];
         $rows = [];
@@ -40,26 +36,12 @@ class MenuController extends Controller
                 [
                     'tag' => '',
                     'text' => $a->text,
-                    'grid' => '3'
+                    'grid' => '5'
                 ],
                 [
                     'tag' => '',
                     'text' => $a->href,
-                    'grid' => '4'
-                ],
-                [
-                    'tag' => '',
-                    'text' => $a->subs->count(), //關聯sql select count(*) from sub_menus,menus where sub_menus.menu_id=menus.id && sub_menus.menu_id="1"
-                    'grid' => '1'
-                ],
-                [
-                    'tag' => 'button',
-                    'action' => 'show',
-                    'color' => ($a->sh == 1) ? 'bg-green-100' : 'bg-gray-100',
-                    'hover' => 'bg-green-200',
-                    'type' => 'button',
-                    'id' => $a->id,
-                    'text' => ($a->sh == 1) ? '顯示' : '隱藏',
+                    'grid' => '5'
                 ],
                 [
                     'tag' => 'button',
@@ -79,24 +61,16 @@ class MenuController extends Controller
                     'hover' => 'bg-indigo-300',
                     'text' => '編輯'
                 ],
-                [
-                    'tag' => 'button',
-                    'type' => 'button',
-                    'action' => 'sub',
-                    'id' => $a->id,
-                    'color' => 'bg-gray-100',
-                    'hover' => 'bg-yellow-300',
-                    'text' => '次選單'
-                ]
             ];
             $rows[] = $tmp;
         }
         // dd($cols);
         $view = [
-            'header' => '網站標題管理',
-            'module' => 'Menu',
+            'header' => '次選單管理',
+            'module' => 'SubMenu',
             'cols' => $cols,
             'rows' => $rows,
+            'menu_id'=>$menu_id
         ];
         // dd($view);
         return view('backend.module', $view);
@@ -107,20 +81,20 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($menu_id)
     {
         $view = [
-            'action' => '/admin/menu',
-            'modal_header' => "新增主選單",
+            'action' => '/admin/submenu/'.$menu_id,
+            'modal_header' => "新增次選單",
             'modal_body' => [
                 [
-                    'label' => '主選單內容',
+                    'label' => '次主選單內容',
                     'tag' => 'input',
                     'type' => 'text',
                     'name' => 'text',
                 ],
                 [
-                    'label' => '主選單連結',
+                    'label' => '次選單連結',
                     'tag' => 'input',
                     'type' => 'text',
                     'name' => 'href'
@@ -137,13 +111,14 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$menu_id)
     {
-        $menu = new Menu;
-        $menu->text = $request->input('text');
-        $menu->href = $request->input('href');
-        $menu->save();
-        return redirect('/admin/menu');
+        $sub = new Sub_menu;
+        $sub->text = $request->input('text');
+        $sub->href = $request->input('href');
+        $sub->menu_id = $menu_id;
+        $sub->save();
+        return redirect('/admin/submenu/'.$menu_id);
     }
 
     /**
@@ -165,25 +140,25 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $menu = Menu::find($id);
+        $sub = sub_menu::find($id);
         $view = [
-            'action' => '/admin/menu/' . $id,
+            'action' => '/admin/submenu/' . $id,
             'method' => 'PATCH',
-            'modal_header' => "編輯主選單資料",
+            'modal_header' => "編輯次選單資料",
             'modal_body' => [
                 [
-                    'label' => '主選單內容',
+                    'label' => '次選單內容',
                     'tag' => 'input',
                     'type' => 'text',
                     'name' => 'text',
-                    'value' => $menu->text
+                    'value' => $sub->text
                 ],
                 [
-                    'label' => '主選單連結',
+                    'label' => '次選單連結',
                     'tag' => 'input',
                     'type' => 'text',
                     'name' => 'href',
-                    'value' => $menu->href
+                    'value' => $sub->href
                 ],
             ],
         ];
@@ -199,18 +174,18 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $menu = Menu::find($id); //明確只撈一筆資料可用此方式
+        $sub = Sub_menu::find($id); //明確只撈一筆資料可用此方式
         //$menu=menu::where('id',$id)->get(); //撈一個二維陣列的結果(fetchall)
 
-        if ($menu->text != $request->input('text')) {
-            $menu->text = $request->input('text');
+        if ($sub->text != $request->input('text')) {
+            $sub->text = $request->input('text');
         }
-        if ($menu->href != $request->input('href')) {
-            $menu->href = $request->input('href');
+        if ($sub->href != $request->input('href')) {
+            $sub->href = $request->input('href');
         }
 
-        $menu->save();
-        return redirect('/admin/menu');
+        $sub->save();
+        return redirect('/admin/submenu/'.$sub->menu_id);
     }
 
     /**
@@ -221,13 +196,6 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        Menu::destroy($id);
-    }
-
-    public function display($id)
-    {
-        $menu = Menu::find($id);
-        $menu->sh=($menu->sh+1)%2;
-        $menu->save();
+        Sub_menu::destroy($id);
     }
 }

@@ -18,6 +18,7 @@ class CreateSubMenusTable extends Migration
             $table->string('text',32);
             $table->string('href',32);
             $table->unsignedInteger('menu_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

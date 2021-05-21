@@ -148,10 +148,8 @@ class AdminController extends Controller
             'modal_body' => [
                 [
                     'label' => '管理者帳號',
-                    'tag' => 'input',
-                    'type' => 'text',
-                    'name' => 'acc',
-                    'value' => $admin->acc
+                    'tag' => '',
+                    'text' => $admin->acc
                 ],
                 [
                     'label' => '管理者密碼',
@@ -174,7 +172,13 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $admin = Admin::find($id);
+        if ($admin->pw != $request->input('pw')) {
+            $admin->pw = $request->input('pw');
+        }
+
+        $admin->save();
+        return redirect('/admin/admin');
     }
 
     /**

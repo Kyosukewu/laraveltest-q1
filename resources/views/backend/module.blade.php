@@ -27,7 +27,7 @@
             @isset($rows)
             @if($module != 'Total' && $module != 'Bottom')
             @foreach($rows as $row)
-            <div class="grid grid-cols-12 text-center">
+            <div class="item grid grid-cols-12 text-center">
                 @foreach($row as $item)
                 @switch($item['tag'])
                 @case('img')
@@ -68,11 +68,19 @@
         }
     });
     $('#addRow').on('click', function() {
+        @if(isset($menu_id))
+        $.get("/modals/add{{ $module }}/{{$menu_id}}", function(modal) {
+            $("#modal").html(modal)
+            $("#baseModal").show()
+            //尚缺清除暫存
+        })
+        @else
         $.get("/modals/add{{ $module }}", function(modal) {
             $("#modal").html(modal)
             $("#baseModal").show()
             //尚缺清除暫存
         })
+        @endif
     })
     $('.edit').on('click', function() {
         let id = $(this).data('id')
@@ -83,6 +91,7 @@
     })
     $('.delete').on('click', function() {
         let id = $(this).data('id')
+        let _this=$(this)
         let admin = $(this).data('admin')
         Swal.fire({
             title: '確定要刪除嗎？',
@@ -101,7 +110,8 @@
                         url: `/admin/{{ strtolower($module) }}/${id}`,
                         success: function() {
                             Swal.fire('已成功刪除', '', 'success')
-                            location.reload()
+                            _this.parents('.item').remove()
+                            // location.reload()
                         }
                     })
                 } else {
@@ -116,14 +126,25 @@
     })
     $('.show').on('click', function() {
         let id = $(this).data('id')
-
+        let _this=$(this)
         $.ajax({
             type: 'patch',
             url: `/admin/{{ strtolower($module) }}/sh/${id}`,
             success: function() {
-                location.reload()
+                if(_this.text()=='顯示'){
+                    _this.text('隱藏')
+                    _this.removeClass('bg-green-100')
+                }else{
+                    _this.text('顯示')
+                    _this.addClass('bg-green-100')
+                }
             }
         })
+    })
+
+    $('.sub').on('click',function(){
+        let id=$(this).data('id')
+        location.href=`/admin/submenu/${id}`
     })
 </script>
 @endsection

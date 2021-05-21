@@ -10,6 +10,7 @@ use App\Http\Controllers\BottomController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SubMenuController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

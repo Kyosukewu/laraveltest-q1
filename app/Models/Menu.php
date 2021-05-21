@@ -11,4 +11,8 @@ class Menu extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable=['text','href','sh'];
+
+    public function subs(){
+        return $this->hasMany("App\Models\Sub_menu"); //建立關聯資料表 一對多
+    }
 }
