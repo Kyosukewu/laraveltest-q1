@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bottom;
 
-class BottomController extends Controller
+class BottomController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -36,14 +36,18 @@ class BottomController extends Controller
             ]
         ];
         // dd($rows);
-        $view = [
-            'header' => '頁尾版權管理',
-            'module' => 'Bottom',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='頁尾版權管理';
+        $this->view['module']='Bottom';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '頁尾版權管理',
+        //     'module' => 'Bottom',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

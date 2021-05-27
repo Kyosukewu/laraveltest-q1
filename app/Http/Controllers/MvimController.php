@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mvim;
 
-class MvimController extends Controller
+class MvimController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -66,14 +66,18 @@ class MvimController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '動畫圖片管理',
-            'module' => 'Mvim',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='動畫圖片管理';
+        $this->view['module']='Mvim';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '動畫圖片管理',
+        //     'module' => 'Mvim',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use Illuminate\Http\Request;
 
-class AdController extends Controller
+class AdController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -55,14 +55,19 @@ class AdController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '動態文字廣告管理',
-            'module' => 'Ad',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='動態文字廣告管理';
+        $this->view['module']='Ad';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '動態文字廣告管理',
+        //     'module' => 'Ad',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        // return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sub_menu;
 
-class SubMenuController extends Controller
+class SubMenuController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -65,15 +65,19 @@ class SubMenuController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '次選單管理',
-            'module' => 'SubMenu',
-            'cols' => $cols,
-            'rows' => $rows,
-            'menu_id'=>$menu_id
-        ];
+        $this->view['header']='次選單管理';
+        $this->view['module']='SubMenu';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '次選單管理',
+        //     'module' => 'SubMenu',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        //     'menu_id'=>$menu_id
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

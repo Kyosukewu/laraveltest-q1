@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\News;
 
-class NewsController extends Controller
+class NewsController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -65,14 +65,18 @@ class NewsController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '網站標題管理',
-            'module' => 'News',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='網站標題管理';
+        $this->view['module']='News';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '網站標題管理',
+        //     'module' => 'News',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

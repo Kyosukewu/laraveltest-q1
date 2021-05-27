@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 
-class AdminController extends Controller
+class AdminController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -66,14 +66,18 @@ class AdminController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '管理者管理',
-            'module' => 'Admin',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='管理者管理';
+        $this->view['module']='Admin';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '管理者管理',
+        //     'module' => 'Admin',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

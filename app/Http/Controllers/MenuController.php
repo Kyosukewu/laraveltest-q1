@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 
-class MenuController extends Controller
+class MenuController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -92,14 +92,18 @@ class MenuController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '網站標題管理',
-            'module' => 'Menu',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='網站標題管理';
+        $this->view['module']='Menu';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '網站標題管理',
+        //     'module' => 'Menu',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

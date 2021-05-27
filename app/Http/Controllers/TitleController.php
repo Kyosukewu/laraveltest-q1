@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; //封包外部傳來的資料
 use App\Models\Title; //載入欲使用的model
-class TitleController extends Controller
+class TitleController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +13,7 @@ class TitleController extends Controller
      */
     public function index()
     {
+        // dd($this->view);
         $all = Title::all();
         //dd($all); //L內建除錯指令 類似var_dump
         $cols = [
@@ -74,14 +75,21 @@ class TitleController extends Controller
             $rows[] = $tmp;
         }
         // dd($cols);
-        $view = [
-            'header' => '網站標題管理',
-            'module' => 'Title',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
-        // dd($view);
-        return view('backend.module', $view);
+        //$useTitle=Title::where('sh',1)->first();//唯一一筆
+        $this->view['header']='網站標題管理';
+        $this->view['module']='Title';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '網站標題管理',
+        //     'module' => 'Title',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        //     //'useTitle'=>$useTitle,
+        //     'useTitle'=>$this->useTitle,
+        // ];
+        // dd($this->view);
+        return view('backend.module', $this->view);
     }
 
     /**

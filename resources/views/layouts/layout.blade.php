@@ -23,13 +23,15 @@
 <body>
     <div class="container max-w-5xl mx-auto overflow-auto">
         <div class="header w-full max-h-24">
-            <img class="w-full h-full" src="{{ asset('storage/01B01.jpg') }}" alt="" class="w-full">
+        <a href="/" title="{{ $title->text }}">
+            <img class="w-full h-full" src="{{ asset('storage/'.$title->img) }}" alt="{{ $title->text }}" class="w-full">
+        </a>
         </div>
         <div class="main w-full grid grid-cols-12">
             @yield("main")
         </div>
         <div class="footer w-full bg-yellow-300">
-            <div class="footer-text text-center">頁尾版權區塊</div>
+            <div class="footer-text text-center">{{ $bottom }}</div>
         </div>
     </div>
     <div id="modal"></div>

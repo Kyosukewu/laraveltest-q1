@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Total;
 
-class TotalController extends Controller
+class TotalController extends MyController
 {
     /**
      * Display a listing of the resource.
@@ -36,14 +36,18 @@ class TotalController extends Controller
             ]
         ];
         // dd($rows);
-        $view = [
-            'header' => '進站總人數管理',
-            'module' => 'Total',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header']='進站總人數管理';
+        $this->view['module']='Total';
+        $this->view['cols']=$cols;
+        $this->view['rows']=$rows;
+        // $view = [
+        //     'header' => '進站總人數管理',
+        //     'module' => 'Total',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        // ];
         // dd($view);
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**
