@@ -69,6 +69,7 @@ class SubMenuController extends MyController
         $this->view['module']='SubMenu';
         $this->view['cols']=$cols;
         $this->view['rows']=$rows;
+        $this->view['menu_id']=$menu_id;
         // $view = [
         //     'header' => '次選單管理',
         //     'module' => 'SubMenu',

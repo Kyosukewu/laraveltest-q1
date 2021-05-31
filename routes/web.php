@@ -11,6 +11,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SubMenuController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +30,13 @@ use App\Http\Controllers\SubMenuController;
 //     return view('welcome');
 // });
 //Route::view('/','welcome',['name'=>'Yuan']);//傳遞資料至視圖寫法
-Route::view('/', 'home'); //回傳一個靜態頁面 view只傳視圖
+//Route::view('/', 'home'); //回傳一個靜態頁面 view只傳視圖
+
+//首頁
+Route::get('/',[HomeController::class,'index']);
+Route::get('/news',[NewsController::class,'list']);
+Route::get('/login',[AdminController::class,'showLoginForm']);
+
 // Route::view('/admin','backend/title');
 // Route::view('admin','backend.module',['header'=>'網站標題管理','module'=>'Title']);
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 
-class AdminController extends MyController
+class AdminController extends HomeController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class AdminController extends MyController
     public function index()
     {
         $all = Admin::all();
-        //dd($all); //L內建除錯指令 類似var_dump
+        //dd($all); //Laravel內建除錯指令 類似var_dump
         $cols = [
             [
                 'title'=>'帳號',
@@ -194,5 +194,11 @@ class AdminController extends MyController
     public function destroy($id)
     {
         Admin::destroy($id);
+    }
+
+    public function showLoginForm()
+    {
+        parent::sidebar();//執行繼承自HomeController的index方法
+        return view('frontend.login',$this->view);
     }
 }

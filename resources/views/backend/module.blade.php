@@ -10,7 +10,11 @@
             @endif
             <p>後台管理區</p>
         </div>
-        <button class="col-span-4 bg-gray-100 hover:bg-gray-200 p-3 rounded-md">管理登出</button>
+        <div class="col-span-4 w-full">
+        <a href="/logout">
+        <button class=" w-full bg-gray-100 hover:bg-gray-200 p-3 rounded-md">管理登出</button>
+        </a>
+        </div>
     </div>
     <div class="contant border w-full h-full">
         <div class="text-sm text-center border-b bg-yellow-400 p-3">{{$header}}</div>
@@ -130,6 +134,27 @@
         $.ajax({
             type: 'patch',
             url: `/admin/{{ strtolower($module) }}/sh/${id}`,
+            @if($module=='Title')
+            success: function(img) {
+                if(_this.text()=='顯示'){
+                    $('.show').each((idx,dom)=>{ //each迴圈找第一筆資料
+                        if($(dom).text()=='隱藏'){
+                            $(dom).text('顯示')
+                            $(dom).addClass('bg-green-100')
+                            return false //中斷迴圈 此處無法使用break
+                        }
+                    })
+                    _this.text('隱藏')
+                    _this.removeClass('bg-green-100')
+                }else{
+                    $('.show').text('隱藏')
+                    $('.show').removeClass('bg-green-100')
+                    _this.text('顯示')
+                    _this.addClass('bg-green-100')
+                }
+                $('.header a img').attr('src',"http://laravel-q1.com/storage/"+img)
+            }
+            @else
             success: function() {
                 if(_this.text()=='顯示'){
                     _this.text('隱藏')
@@ -139,6 +164,7 @@
                     _this.addClass('bg-green-100')
                 }
             }
+            @endif
         })
     })
 
