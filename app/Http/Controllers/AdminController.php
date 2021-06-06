@@ -41,7 +41,7 @@ class AdminController extends HomeController
                 ],
                 [
                     'tag' => '',
-                    'text' => str_repeat("*",strlen($a->pw)),
+                    'text' => '**********',
                     'grid'=>'5'
                 ],
                 [
@@ -161,7 +161,7 @@ class AdminController extends HomeController
                     'tag' => 'input',
                     'type' => 'password',
                     'name' => 'pw',
-                    'value' => $admin->pw
+                    'value' => '**********'
                 ],
             ],
         ];
