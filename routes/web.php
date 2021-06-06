@@ -35,7 +35,9 @@ use App\Http\Controllers\HomeController;
 //首頁
 Route::get('/',[HomeController::class,'index']);
 Route::get('/news',[NewsController::class,'list']);
-Route::get('/login',[AdminController::class,'showLoginForm']);
+Route::get('/login',[AdminController::class,'showLoginForm'])->name('login');
+Route::post('/login',[AdminController::class,'login']);
+Route::get('/logout',[AdminController::class,'logout']);
 
 // Route::view('/admin','backend/title');
 // Route::view('admin','backend.module',['header'=>'網站標題管理','module'=>'Title']);
@@ -91,7 +93,7 @@ Route::redirect('/admin', 'admin/title'); //redirect 重新導向至...
 //post->新增
 //patch->更新
 
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware('auth')->group(function(){ //->middleware('auth')路由保護機制 避免直接輸入路由進入
     //get
     Route::get('/title',[TitleController::class,'index']);
     Route::get('/ad',[AdController::class,'index']);

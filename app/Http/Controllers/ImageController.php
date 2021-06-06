@@ -14,7 +14,7 @@ class ImageController extends MyController
      */
     public function index()
     {
-        $all = Image::all();
+        $all = Image::paginate(3);
         //dd($all); //L內建除錯指令 類似var_dump
         $cols = [
             [
@@ -70,6 +70,7 @@ class ImageController extends MyController
         $this->view['module']='Image';
         $this->view['cols']=$cols;
         $this->view['rows']=$rows;
+        $this->view['paginate']=$all->links();
         // $view = [
         //     'header' => '校園映像圖片管理',
         //     'module' => 'Image',

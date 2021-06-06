@@ -60,6 +60,13 @@
             @endif
             @endisset
         </div>
+        @switch($module)
+            @case('Image')
+            @case('News')
+                {!!$paginate!!} 
+                <!-- 因安全性問題 前台會將變數內容以字串表示 需加 ！ 執行才能正常顯示 -->
+            @break
+        @endswitch
     </div>
 </div>
 @endsection

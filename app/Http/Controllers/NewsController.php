@@ -15,7 +15,7 @@ class NewsController extends HomeController
      */
     public function index()
     {
-        $all = News::all();
+        $all = News::paginate(4);
         //dd($all); //L內建除錯指令 類似var_dump
         $cols = [
             [
@@ -70,6 +70,7 @@ class NewsController extends HomeController
         $this->view['module']='News';
         $this->view['cols']=$cols;
         $this->view['rows']=$rows;
+        $this->view['paginate']=$all->links();
         // $view = [
         //     'header' => '網站標題管理',
         //     'module' => 'News',
@@ -197,6 +198,7 @@ class NewsController extends HomeController
     public function list()
     {
         parent::sidebar();
+        $this->view['news']=News::where('sh',1)->paginate(5); //分頁筆數
         return view('frontend.news',$this->view);
     }
 }

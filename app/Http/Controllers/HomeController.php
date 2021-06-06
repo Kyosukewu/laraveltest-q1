@@ -8,6 +8,7 @@ use App\Models\Image;
 use App\Models\Ad;
 use App\Models\Mvim;
 use App\Models\News;
+use Auth;
 
 class HomeController extends MyController
 {
@@ -49,6 +50,10 @@ class HomeController extends MyController
         //laravel內建collections方法  pluck() -> 摘取回傳資料內的特定參數  all() -> 回傳陣列(也可使用toArray())
         // dd($ads);
         //dd($menus);
+        // dd(Auth::user());
+        if(Auth::user()){
+            $this->view['user']=Auth::user(); //取的使用者資訊
+        }
         $this->view['menus']=$menus;//將menus併入變數view
         $this->view['images']=$images;
         $this->view['ads']=$ads;

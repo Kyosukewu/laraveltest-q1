@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'users', //此處passwords是指認證用的provider
     ],
 
     /*
@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'guards' => [
+    'guards' => [ //定義有幾個守門員
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -68,7 +68,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            // 'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [

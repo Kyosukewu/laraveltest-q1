@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
-
+use Illuminate\Support\Facades\auth; //引入認證機制
+use Hash; //加密機制 等同 use Illuminate\Support\Facades\Hash 於config/app.php 內有定義別名
 class AdminController extends HomeController
 {
     /**
@@ -120,7 +121,7 @@ class AdminController extends HomeController
     {
         $admin = new Admin;
         $admin->acc=$request->input('acc');
-        $admin->pw=$request->input('pw');
+        $admin->pw=Hash::make($request->input('pw'));
         $admin->save();
         return redirect('/admin/admin');
     }
@@ -178,7 +179,7 @@ class AdminController extends HomeController
     {
         $admin = Admin::find($id);
         if ($admin->pw != $request->input('pw')) {
-            $admin->pw = $request->input('pw');
+            $admin->pw = Hash::make($request->input('pw'));
         }
 
         $admin->save();
@@ -200,5 +201,31 @@ class AdminController extends HomeController
     {
         parent::sidebar();//執行繼承自HomeController的index方法
         return view('frontend.login',$this->view);
+    }
+
+    public function login(Request $request){
+        $user=[
+            'acc'=>$request->input('acc'),
+            'password'=>$request->input('pw') //認證機制pw名稱需為password
+        ];
+        if(Auth::attempt($user)){
+            return redirect('/admin');
+        }else{
+            return redirect('/login')->with('error','帳號或密碼錯誤');
+        }
+        // $acc=$request->input('acc');
+        // $pw=$request->input('pw');
+        // $check=Admin::where('acc',$acc)->where('pw',$pw)->count();
+        // if($check){
+        //     return redirect('/admin');
+        // }else{
+        //     return redirect('/login')->with('error','帳號或密碼錯誤'); //with帶入錯誤訊息值
+        // }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
     }
 }

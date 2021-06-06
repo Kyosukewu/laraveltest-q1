@@ -40,15 +40,18 @@
 </div>
 <div class="right_side col-span-3 border">
     <div class="w-full">
-        @if(isset($_SESSION))
-        <a href="/logout">
-        <button class="gray_btn">管理登出</button>
+    <!-- auth/已驗證使用者 guest/未驗證使用者 -->
+        @auth
+        <div class="text-center bg-green-200 w-full">歡迎：{{$user->acc}}</div>
+        <a href="/admin">
+        <button class="gray_btn">返回管理</button>
         </a>
-        @else
+        @endauth
+        @guest
         <a href="/login">
         <button class="gray_btn">管理登入</button>
         </a>
-        @endif
+        @endguest
     </div>
     <div class="text-center w-9/12 mx-auto border-b p-3 mb-3">校園映像區</div>
     <div class="school_image">
