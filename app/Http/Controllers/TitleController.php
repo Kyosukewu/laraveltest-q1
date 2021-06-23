@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; //封包外部傳來的資料
 use App\Models\Title; //載入欲使用的model
+use Symfony\Component\HttpFoundation\Response;
 class TitleController extends MyController
 {
     /**
@@ -139,7 +140,7 @@ class TitleController extends MyController
             $title->text = $request->input('text');
             $title->save();
         }
-
+        return response()->noContent(Response::HTTP_CREATED); //回應狀態碼
         return redirect('/admin/title'); //同header
     }
 

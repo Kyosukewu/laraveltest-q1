@@ -31,4 +31,13 @@ class TitleTest extends TestCase
         $response = $this->withoutMiddleware()->get('/admin/title');
         $response->assertStatus(200); //確認狀態碼
     }
+
+    //測試 /posts/store 路徑能否正常用來新增資料
+    public function test_store_post()
+    {
+        $post = Title::factory()->make(); //make工廠類可自行填入欲生成資料
+        $response=$this->withoutMiddleware()->post('/admin/title',['text'=>$post['text'],'img'=>$post['img'],'sh'=>$post['sh']]);
+        $response->assertStatus(201);
+        //$response->assertRedirect('/admin/title');
+    }
 }
