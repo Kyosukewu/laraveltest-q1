@@ -135,6 +135,6 @@ class TotalController extends MyController
      */
     public function destroy($id)
     {
-        //
+        dd('destroy');
     }
 }
